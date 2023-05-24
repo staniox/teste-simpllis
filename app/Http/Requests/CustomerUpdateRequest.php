@@ -3,11 +3,10 @@
 namespace App\Http\Requests;
 
 use App\Models\Customer;
-use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class CustomerStoreRequest extends FormRequest
+class CustomerUpdateRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -17,8 +16,9 @@ class CustomerStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'id' => ['required'],
             'name' => ['string', 'max:255'],
-            'email' => ['email', 'max:255', Rule::unique(Customer::class)],
+            'email' => ['email', 'max:255', Rule::unique(Customer::class)->ignore($this->id)],
             'gender' => ['required', Rule::in(['Masculino', 'Feminino'])],
             'birthdate' => ['required'],
         ];

@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
-class CustomerController extends Controller
+class BrandController extends Controller
 {
 
     public function index(Request $request): Response

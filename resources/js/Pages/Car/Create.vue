@@ -3,6 +3,7 @@ import '@vuepic/vue-datepicker/dist/main.css';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import CustomerForm from "@/Pages/Customer/partials/CustomerForm.vue";
+import CarForm from "@/Pages/Car/partials/CarForm.vue";
 </script>
 
 <template>
@@ -15,7 +16,7 @@ import CustomerForm from "@/Pages/Customer/partials/CustomerForm.vue";
             </Link>
         </template>
 
-        <CustomerForm />
+        <CarForm />
 
     </AuthenticatedLayout>
 </template>

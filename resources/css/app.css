@@ -1,3 +1,25 @@
+@import 'vue3-easy-data-table/dist/style.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.btn {
+    @apply py-2 px-4 rounded-md
+}
+.btn-form {
+    @apply py-3 px-5 rounded-md
+}
+
+.btn-primary {
+    @apply bg-green-500 hover:bg-green-600 text-white font-semibold
+}
+.btn-alert {
+    @apply bg-orange-500 hover:bg-orange-600 text-white font-semibold
+}
+
+.btn-danger {
+    @apply bg-red-500 hover:bg-red-600 text-white font-semibold
+}
+.customize-table colgroup *, colgroup::before, colgroup::after{
+    border-radius: 10px !important;
+}

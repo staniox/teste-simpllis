@@ -2,12 +2,12 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Brand;
 use App\Models\Customer;
-use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class CustomerStoreRequest extends FormRequest
+class CarUpdateRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -17,10 +17,10 @@ class CustomerStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['string', 'max:255'],
-            'email' => ['email', 'max:255', Rule::unique(Customer::class)],
-            'gender' => ['required', Rule::in(['Masculino', 'Feminino'])],
-            'birthdate' => ['required'],
+            'id' => ['required'],
+            'name' => ['required', 'string', 'max:255'],
+            'brand_id' => ['required', Rule::exists(Brand::class)],
+            'customer_id' => ['required', Rule::exists(Customer::class)],
         ];
     }
 }

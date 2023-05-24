@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CarController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -37,8 +38,22 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth', 'verified'])->prefix('customers')->group(function () {
-    Route::get('/', [CustomerController::class, 'create'])->name('customers.create');
+    Route::get('/', [CustomerController::class, 'index'])->name('customers');
+    Route::get('/create', [CustomerController::class, 'create'])->name('customers.create');
     Route::post('/', [CustomerController::class, 'store'])->name('customers.store');
+    Route::get('/{id}', [CustomerController::class, 'edit'])->name('customers.edit');
+    Route::put('/', [CustomerController::class, 'update'])->name('customers.update');
+    Route::delete('/{id}', [CustomerController::class, 'destroy'])->name('customers.destroy');
 });
+
+Route::middleware(['auth', 'verified'])->prefix('cars')->group(function () {
+    Route::get('/', [CarController::class, 'index'])->name('cars');
+    Route::get('/create', [CarController::class, 'create'])->name('cars.create');
+    Route::post('/', [CarController::class, 'store'])->name('cars.store');
+    Route::get('/{id}', [CarController::class, 'edit'])->name('cars.edit');
+    Route::put('/', [CarController::class, 'update'])->name('cars.update');
+    Route::delete('/{id}', [CarController::class, 'destroy'])->name('cars.destroy');
+});
+
 
 require __DIR__.'/auth.php';

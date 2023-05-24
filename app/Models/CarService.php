@@ -6,18 +6,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Customer extends Model
+class CarService extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'email',
-        'gender',
-        'birthdate',
+        'service_date',
     ];
 
-    public function cars(): BelongsToMany
+    public function services(): BelongsToMany
     {
         return $this->belongsToMany(Car::class);
     }

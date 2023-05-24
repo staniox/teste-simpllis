@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CustomerStoreRequest;
-use App\Http\Requests\CustomerUpdateRequest;
-use App\Models\Customer;
+use App\Http\Requests\CarStoreRequest;
+use App\Http\Requests\CarUpdateRequest;
+use App\Models\Car;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
-class CustomerController extends Controller
+class CarController extends Controller
 {
 
     public function index(Request $request): Response
@@ -19,7 +18,7 @@ class CustomerController extends Controller
         $fields = $request->all();
         request()->query->remove('saved');
         request()->query->remove('updated');
-        $customers = Customer::all();
+        $cars = Car::all();
         $headers =  array(
             (object) [
             'text' => 'ID',
@@ -32,18 +31,13 @@ class CustomerController extends Controller
             'sortable' => 'true'
         ],
             (object) [
-                'text' => 'Email',
-                'value' => 'email',
+                'text' => 'Marca',
+                'value' => 'brand_id',
                 'sortable' => 'true'
             ],
             (object) [
-                'text' => 'Sexo',
-                'value' => 'gender',
-                'sortable' => 'true'
-            ],
-            (object) [
-                'text' => 'Dt. nascimento',
-                'value' => 'birthdate',
+                'text' => 'Proprietário',
+                'value' => 'customer_id',
                 'sortable' => 'true'
             ],
             (object) [
@@ -57,27 +51,27 @@ class CustomerController extends Controller
             ],
         );
 
-        $props = array_merge($fields,['items' => $customers, 'headers' =>$headers], );
+        $props = array_merge($fields,['items' => $cars, 'headers' =>$headers], );
 
-        return Inertia::render('Customer/Index', $props);
+        return Inertia::render('Car/Index', $props);
     }
     public function create(): Response
     {
-        return Inertia::render('Customer/Create');
+        return Inertia::render('Car/Create');
     }
 
-    public function store(CustomerStoreRequest $request): RedirectResponse
+    public function store(CarStoreRequest $request): RedirectResponse
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:'.Customer::class,
+            'email' => 'required|string|email|max:255|unique:'.Car::class,
             'gender' => ['required','in:Masculino,Feminino'],
             'birthdate' => 'required|date',
         ]);
 
-        Customer::create($request->all());
+        Car::create($request->all());
 
-        return Redirect::route('customers',['saved' => true]);
+        return Redirect::route('cars',['saved' => true]);
     }
 
     /**
@@ -85,22 +79,22 @@ class CustomerController extends Controller
      */
     public function edit(Request $request): Response
     {
-        $customer = Customer::findOrFail($request->route('id'));
-        return Inertia::render('Customer/Edit', [
-            'customer' => $customer
+        $car = Car::findOrFail($request->route('id'));
+        return Inertia::render('Car/Edit', [
+            'car' => $car
         ]);
     }
 
     /**
      * Update the user's profile information.
      */
-    public function update(CustomerUpdateRequest $request): RedirectResponse
+    public function update(CarUpdateRequest $request): RedirectResponse
     {
         $request->validated();
         $input = $request->all();
-        Customer::whereId($input['id'])->update($input);
+        Car::whereId($input['id'])->update($input);
 
-        return Redirect::route('customers',['updated' => true]);
+        return Redirect::route('cars',['updated' => true]);
     }
 
     /**
@@ -108,9 +102,9 @@ class CustomerController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
-        $customer = Customer::findOrFail($request->route('id'));
-        $customer->delete();
+        $car = Car::findOrFail($request->route('id'));
+        $car->delete();
 
-        return Redirect::route('customers');
+        return Redirect::route('cars');
     }
 }
